@@ -8,12 +8,12 @@
 
 char chooseLuminace(double light);
 
-uint8_t asset(int x, int y, double z, double zBuffer[SCR][SCR]);
+uint8_t asset(int x, int y, double z);
 
 void randerFrame(double dObj, double A, double B) {
-  double xL = 0;
-  double yL = -1;
-  double zL = 1;
+  double xL = 1;
+  double yL = 0;
+  double zL = 0;
   double exposeFactor = 0.95;
 
   double zBuffer[SCR][SCR];
@@ -58,7 +58,7 @@ void randerFrame(double dObj, double A, double B) {
       int x_ = (int)((x * dScr) / (dObj + z));
       int y_ = (int)((y * dScr) / (dObj + z));
 
-      if (!asset(x_, y_, z, zBuffer)) {
+      if (!asset(x_, y_, z)) {
         continue;
       }
 
@@ -84,9 +84,9 @@ void randerFrame(double dObj, double A, double B) {
 
   for (int i = 0; i < SCR; i++) {
     for (int j = 0; j < SCR; j++) {
-      printf("%c ", frame[i][j]);
+      printf("%c%c", frame[i][j], frame[i][j]);
     }
-    printf("\n") ;
+    printf("\n");
   }
 }
 
@@ -106,14 +106,14 @@ void msSleep(long msec) {
 int main() {
   double i = 0, j = 0;
   while (1) {
-    randerFrame(10, i, j);
-    i += M_PI / 8;
-    j += M_PI / 17;
-    msSleep(100);
+    randerFrame(5, i, j);
+    i += M_PI / 80;
+    j += M_PI / 170;
+    msSleep(10);
   }
 }
 
-uint8_t asset(int x, int y, double z, double zBuffer[SCR][SCR]) {
+uint8_t asset(int x, int y, double z) {
   x += SCR / 2;
   if (x > SCR - 1 || x < 0) {
     return 0;
@@ -124,6 +124,7 @@ uint8_t asset(int x, int y, double z, double zBuffer[SCR][SCR]) {
   }
   return 1;
 }
+
 char chooseLuminace(double light) {
   const static char *const luminace = ".,-~:;=!*#$@";
 
